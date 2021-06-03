@@ -32,7 +32,7 @@ public class UserService {
         user.setPhoneNumber(userDetails.getPhoneNumber());
         user.setStakeholderPosition(userDetails.getStakeholderPosition());
         user.setUserId(userDetails.getUserId());
-        user.setUsername(userDetails.getUsername());
+        user.setUserName(userDetails.getUserName());
         User updatedUser=userRepository.save(user);
         return updatedUser;
     }

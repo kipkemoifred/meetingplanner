@@ -3,39 +3,61 @@ package com.example.meetingOfficePlanner.meetingOfficePlanner.entity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.time.LocalTime;
 
 @Entity
 public class User {
     @Id
     @GeneratedValue
     int userId;
-    private String username;
-    private String password;
+    private String userName;
 
-    public void setRoles(String roles) {
-        this.roles = roles;
+    public String getUserName() {
+        return userName;
     }
 
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public int getNumFailedLogins() {
+        return NumFailedLogins;
+    }
+
+    public void setNumFailedLogins(int numFailedLogins) {
+        NumFailedLogins = numFailedLogins;
+    }
+
+    public int getTimesUsedSamePassword() {
+        return timesUsedSamePassword;
+    }
+
+    public void setTimesUsedSamePassword(int timesUsedSamePassword) {
+        this.timesUsedSamePassword = timesUsedSamePassword;
+    }
+
+    public LocalTime getLockedUntil() {
+        return LockedUntil;
+    }
+
+    public void setLockedUntil(LocalTime lockedUntil) {
+        LockedUntil = lockedUntil;
+    }
+
+    private String password;
     private String roles;
     private boolean active;
+    private int NumFailedLogins;//max 4 30 mins
+    private int timesUsedSamePassword;//4 change psd
+    private LocalTime LockedUntil;
     private String StakeholderPosition;
     private String email;
     private String phoneNumber;
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "userId=" + userId +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", roles='" + roles + '\'' +
-                ", active=" + active +
-                ", StakeholderPosition='" + StakeholderPosition + '\'' +
-                ", email='" + email + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                '}';
-    }
 
+    public void setRoles(String roles) {
+        this.roles = roles;
+    }
     public String getRoles() {
         return roles;
     }
@@ -56,11 +78,14 @@ public class User {
         super();
     }
 
-    public User(String username, String password, String roles, boolean active, String stakeholderPosition, String email, String phoneNumber) {
-        this.username = username;
+    public User(String userName, String password, String roles, boolean active, int numFailedLogins, int timesUsedSamePassword, LocalTime lockedUntil, String stakeholderPosition, String email, String phoneNumber) {
+        this.userName = userName;
         this.password = password;
         this.roles = roles;
         this.active = active;
+        this.NumFailedLogins = numFailedLogins;
+        this.timesUsedSamePassword = timesUsedSamePassword;
+        this.LockedUntil = lockedUntil;
         this.StakeholderPosition = stakeholderPosition;
         this.email = email;
         this.phoneNumber = phoneNumber;
@@ -72,14 +97,6 @@ public class User {
 
     public void setUserId(int userId) {
         this.userId = userId;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getPassword() {
@@ -114,4 +131,20 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", roles='" + roles + '\'' +
+                ", active=" + active +
+                ", NumFailedLogins=" + NumFailedLogins +
+                ", timesUsedSamePassword=" + timesUsedSamePassword +
+                ", LockedUntil=" + LockedUntil +
+                ", StakeholderPosition='" + StakeholderPosition + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                '}';
+    }
 }

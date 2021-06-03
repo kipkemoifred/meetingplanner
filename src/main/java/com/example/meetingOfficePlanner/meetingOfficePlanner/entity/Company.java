@@ -1,6 +1,13 @@
 package com.example.meetingOfficePlanner.meetingOfficePlanner.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Company {
+    @Id
+            @GeneratedValue
     int companyId;
     String companyName;
 
@@ -8,6 +15,7 @@ public class Company {
         this.companyName = companyName;
     }
     public Company(){}
+
 
     @Override
     public String toString() {

@@ -13,6 +13,7 @@ public class Event {
     Date MeetingEndDate;
     int capacity;
     boolean repetitive;// true--specific dates
+    //repetitive array
     String topic;//Mandatory
     String description;//optional
     Event(){}
@@ -92,6 +93,10 @@ public class Event {
                 ", topic='" + topic + '\'' +
                 ", description='" + description + '\'' +
                 '}';
+    }
+
+    public boolean getRepetitive() {
+        return repetitive;
     }
 }
 

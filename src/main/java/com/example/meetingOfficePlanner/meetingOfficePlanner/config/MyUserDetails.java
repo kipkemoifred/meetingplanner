@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -15,18 +16,20 @@ public class MyUserDetails implements UserDetails {
     private String password;
     private String roles;
     private boolean active;
-    private String stakeholderPosition;
-    private String email;
-    private String phoneNumber;
+    private LocalTime LockedUntil;
+    private int NumFailedLogins;//max 4 30 mins
+    private int timesUsedSamePassword;//4 change psd
     private List<GrantedAuthority> authorities;
 
     public MyUserDetails(User user){
-this.userName=user.getUsername();
+this.userName=user.getUserName();
 this.password=user.getPassword();
 this.active=user.isActive();
-this.stakeholderPosition=user.getStakeholderPosition();
-this.email=user.getEmail();
-this.phoneNumber=user.getPhoneNumber();
+this.roles=user.getRoles();
+this.LockedUntil=user.getLockedUntil();
+this.NumFailedLogins=user.getNumFailedLogins();
+this.timesUsedSamePassword=user.getTimesUsedSamePassword();
+
 this.authorities= Arrays.stream(user.getRoles().split(","))
 .map(SimpleGrantedAuthority::new)
 .collect(Collectors.toList())
@@ -56,7 +59,7 @@ MyUserDetails(){}
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;//locked for 30 mins for incorrect credentials
+        return true;//4 failed,locked for 30 mins for incorrect credentials
     }
 
     @Override
