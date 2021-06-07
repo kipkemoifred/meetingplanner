@@ -9,13 +9,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 @RestController
+@RequestMapping(value = "/api/")
 public class EventController {
     @Autowired
     private EventService eventService;
     @Autowired
     private EventRepository eventRepository;
 
-    @PostMapping(value="/event")
+    @PostMapping(value="/createevents")
     Event addNewEvent(@RequestBody Event event){
         return eventService.addEvent(event);
     }
@@ -34,7 +35,7 @@ public class EventController {
     public Event updateEvent(@RequestBody Event event) throws EventNotFoundException {
         return eventService.updateEvent(event.getEventId(), event);
     }
-    @DeleteMapping("/event/{eventId}")
+    @DeleteMapping("/deleteanyevent/{eventId}")
     public ResponseEntity<?> deleteEvent(@PathVariable(value = "eventId") int eventId) throws EventNotFoundException {
         Event event = eventRepository.findById(eventId)
                 .orElseThrow(() -> new EventNotFoundException(eventId));

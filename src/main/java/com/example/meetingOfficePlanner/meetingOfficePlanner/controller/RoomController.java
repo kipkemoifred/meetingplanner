@@ -16,17 +16,11 @@ public class RoomController {
         @Autowired
         private RoomRepository roomRepository;
 
-        @PostMapping(value="/room")
+        @PostMapping(value="/createboardmeetings")
         Room addNewRoom(@RequestBody Room room){
             return roomService.addRoom(room);
         }
 
-
-        //
-//    @GetMapping(value = "/user/{userId}") @PostMapping
-////
-////    @DeleteMapping
-////    @PutMapping
         @GetMapping(value = "/room/{roomId}")
         public Room getSpecificUser(@PathVariable("roomId") int roomId) throws RoomNotFoundException {
             return roomService.getRoom(roomId);
@@ -50,9 +44,6 @@ public class RoomController {
 
             return ResponseEntity.ok().build();
         }
-//    @DeleteMapping (value = "/users/{id}")
-//    public void  deleteStudent(@PathVariable(value="id") int userId)throws UserNotFoundException{
-//        return UserService.deleteUser(userId);
-//    }
+
     }
 

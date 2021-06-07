@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.time.LocalTime;
+import java.util.Date;
 
 @Entity
 public class User {
@@ -12,6 +13,46 @@ public class User {
     int userId;
     private String userName;
 
+
+    private String password;
+    private String roles;
+    private boolean active;
+    private int NumFailedLogins;//max 4 30 mins
+    private int timesUsedSamePassword;//4 change psd
+    private boolean accountNonLocked;
+    private Date lockTime;
+    private Date LockedUntil;
+    private String StakeholderPosition;
+    private String email;
+    private String phoneNumber;
+    public User(String userName, String password, String roles, boolean active, int numFailedLogins, int timesUsedSamePassword, boolean accountNonLocked, Date lockTime, Date lockedUntil, String stakeholderPosition, String email, String phoneNumber) {
+        this.userName = userName;
+        this.password = password;
+        this.roles = roles;
+        this.active = active;
+        this.NumFailedLogins = numFailedLogins;
+        this.timesUsedSamePassword = timesUsedSamePassword;
+        this.accountNonLocked = accountNonLocked;
+        this.lockTime = lockTime;
+        this.LockedUntil = lockedUntil;
+        this.StakeholderPosition = stakeholderPosition;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+    }
+
+
+
+    public void setTimesUsedSamePassword(int timesUsedSamePassword) {
+        this.timesUsedSamePassword = timesUsedSamePassword;
+    }
+
+    public Date getLockedUntil() {
+        return LockedUntil;
+    }
+
+    public void setLockedUntil(Date lockedUntil) {
+        LockedUntil = lockedUntil;
+    }
     public String getUserName() {
         return userName;
     }
@@ -31,30 +72,6 @@ public class User {
     public int getTimesUsedSamePassword() {
         return timesUsedSamePassword;
     }
-
-    public void setTimesUsedSamePassword(int timesUsedSamePassword) {
-        this.timesUsedSamePassword = timesUsedSamePassword;
-    }
-
-    public LocalTime getLockedUntil() {
-        return LockedUntil;
-    }
-
-    public void setLockedUntil(LocalTime lockedUntil) {
-        LockedUntil = lockedUntil;
-    }
-
-    private String password;
-    private String roles;
-    private boolean active;
-    private int NumFailedLogins;//max 4 30 mins
-    private int timesUsedSamePassword;//4 change psd
-    private LocalTime LockedUntil;
-    private String StakeholderPosition;
-    private String email;
-    private String phoneNumber;
-
-
     public void setRoles(String roles) {
         this.roles = roles;
     }
@@ -78,18 +95,7 @@ public class User {
         super();
     }
 
-    public User(String userName, String password, String roles, boolean active, int numFailedLogins, int timesUsedSamePassword, LocalTime lockedUntil, String stakeholderPosition, String email, String phoneNumber) {
-        this.userName = userName;
-        this.password = password;
-        this.roles = roles;
-        this.active = active;
-        this.NumFailedLogins = numFailedLogins;
-        this.timesUsedSamePassword = timesUsedSamePassword;
-        this.LockedUntil = lockedUntil;
-        this.StakeholderPosition = stakeholderPosition;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-    }
+
 
     public int getUserId() {
         return userId;
@@ -129,6 +135,22 @@ public class User {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public boolean isAccountNonLocked() {
+        return accountNonLocked;
+    }
+
+    public void setAccountNonLocked(boolean accountNonLocked) {
+        this.accountNonLocked = accountNonLocked;
+    }
+
+    public Date getLockTime() {
+        return lockTime;
+    }
+
+    public void setLockTime(Date lockTime) {
+        this.lockTime = lockTime;
     }
 
     @Override

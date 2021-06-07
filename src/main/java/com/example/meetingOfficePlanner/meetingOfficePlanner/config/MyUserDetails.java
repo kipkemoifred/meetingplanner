@@ -8,20 +8,23 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class MyUserDetails implements UserDetails {
+    private User user;
     private String userName;
     private String password;
     private String roles;
     private boolean active;
-    private LocalTime LockedUntil;
+    private Date LockedUntil;
     private int NumFailedLogins;//max 4 30 mins
     private int timesUsedSamePassword;//4 change psd
     private List<GrantedAuthority> authorities;
 
     public MyUserDetails(User user){
+        this.user=user;
 this.userName=user.getUserName();
 this.password=user.getPassword();
 this.active=user.isActive();
@@ -37,6 +40,7 @@ this.authorities= Arrays.stream(user.getRoles().split(","))
     }
 
 MyUserDetails(){}
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
@@ -59,7 +63,7 @@ MyUserDetails(){}
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;//4 failed,locked for 30 mins for incorrect credentials
+        return user.isAccountNonLocked();//4 failed,locked for 30 mins for incorrect credentials
     }
 
     @Override
@@ -71,4 +75,5 @@ MyUserDetails(){}
     public boolean isEnabled() {
         return active;
     }
+    public User getUser(){return this.user;}
 }

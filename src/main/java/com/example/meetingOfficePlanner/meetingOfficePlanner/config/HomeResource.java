@@ -13,18 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class HomeResource {
-//    @GetMapping("/")
-//    public String home(){
-//        return ("<h1>Welcome<h1>");
-//    }
-//    @GetMapping("user")
-//    public String user(){
-//        return ("<h1>Welcome user<h1>");
-//    }
-//    @GetMapping("/admin")
-//    public String admin(){
-//        return ("<h1>Welcome admin<h1>");
-//    }
 @Autowired
 private
 AuthenticationManager authenticationManager;
@@ -43,7 +31,7 @@ AuthenticationManager authenticationManager;
         return "Hello World";
     }
 
-    @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
+    @RequestMapping(value = "/login", method = RequestMethod.POST)//homepage
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
 
         try {
