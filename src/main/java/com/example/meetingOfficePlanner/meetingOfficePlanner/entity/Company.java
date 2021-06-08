@@ -7,14 +7,16 @@ import javax.persistence.Id;
 @Entity
 public class Company {
     @Id
-            @GeneratedValue
+    @GeneratedValue
     int companyId;
     String companyName;
 
     public Company(String companyName) {
         this.companyName = companyName;
     }
-    public Company(){}
+
+    public Company() {
+    }
 
 
     @Override

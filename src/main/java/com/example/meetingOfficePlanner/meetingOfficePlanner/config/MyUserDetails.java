@@ -21,22 +21,24 @@ public class MyUserDetails implements UserDetails {
     private int timesUsedSamePassword;//4 change psd
     private List<GrantedAuthority> authorities;
 
-    public MyUserDetails(User user){
-this.userName=user.getUserName();
-this.password=user.getPassword();
-this.active=user.isActive();
-this.roles=user.getRoles();
-this.LockedUntil=user.getLockedUntil();
-this.NumFailedLogins=user.getNumFailedLogins();
-this.timesUsedSamePassword=user.getTimesUsedSamePassword();
+    public MyUserDetails(User user) {
+        this.userName = user.getUserName();
+        this.password = user.getPassword();
+        this.active = user.isActive();
+        this.roles = user.getRoles();
+        this.LockedUntil = user.getLockedUntil();
+        this.NumFailedLogins = user.getNumFailedLogins();
+        this.timesUsedSamePassword = user.getTimesUsedSamePassword();
 
-this.authorities= Arrays.stream(user.getRoles().split(","))
-.map(SimpleGrantedAuthority::new)
-.collect(Collectors.toList())
-;
+        this.authorities = Arrays.stream(user.getRoles().split(","))
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList())
+        ;
     }
 
-MyUserDetails(){}
+    MyUserDetails() {
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;

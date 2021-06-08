@@ -1,4 +1,5 @@
 package com.example.meetingOfficePlanner.meetingOfficePlanner.controller;
+
 import com.example.meetingOfficePlanner.meetingOfficePlanner.entity.Company;
 import com.example.meetingOfficePlanner.meetingOfficePlanner.exception.CompanyNotFoundException;
 import com.example.meetingOfficePlanner.meetingOfficePlanner.repository.CompanyRepository;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 @RestController
 public class CompanyController {
     @Autowired
@@ -15,8 +17,8 @@ public class CompanyController {
     @Autowired
     private CompanyRepository companyRepository;
 
-    @PostMapping(value="/company")
-    Company addNewCompany(@RequestBody Company company){
+    @PostMapping(value = "/company")
+    Company addNewCompany(@RequestBody Company company) {
         return companyService.addCompany(company);
     }
 
@@ -33,13 +35,15 @@ public class CompanyController {
     }
 
     @GetMapping("/company")
-    public List<Company> getAllCompanies(){
+    public List<Company> getAllCompanies() {
         return companyService.getCompanies();
     }
+
     @PutMapping(value = "/company/{companyId}")
     public Company updateCompany(@RequestBody Company company) throws CompanyNotFoundException {
         return companyService.updateCompany(company.getCompanyId(), company);
     }
+
     @DeleteMapping("/company/{companyId}")
     public ResponseEntity<?> deleteCompany(@PathVariable(value = "companyId") int companyId) throws CompanyNotFoundException {
         Company company = companyRepository.findById(companyId)

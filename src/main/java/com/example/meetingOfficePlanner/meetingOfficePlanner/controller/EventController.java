@@ -1,4 +1,5 @@
 package com.example.meetingOfficePlanner.meetingOfficePlanner.controller;
+
 import com.example.meetingOfficePlanner.meetingOfficePlanner.entity.Event;
 import com.example.meetingOfficePlanner.meetingOfficePlanner.exception.EventNotFoundException;
 import com.example.meetingOfficePlanner.meetingOfficePlanner.repository.EventRepository;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 @RestController
 public class EventController {
     @Autowired
@@ -15,8 +17,8 @@ public class EventController {
     @Autowired
     private EventRepository eventRepository;
 
-    @PostMapping(value="/event")
-    Event addNewEvent(@RequestBody Event event){
+    @PostMapping(value = "/event")
+    Event addNewEvent(@RequestBody Event event) {
         return eventService.addEvent(event);
     }
 
@@ -27,13 +29,15 @@ public class EventController {
     }
 
     @GetMapping("/event")
-    public List<Event> getAllEvents(){
+    public List<Event> getAllEvents() {
         return eventService.getEvents();
     }
+
     @PutMapping(value = "/event/{eventId}")
     public Event updateEvent(@RequestBody Event event) throws EventNotFoundException {
         return eventService.updateEvent(event.getEventId(), event);
     }
+
     @DeleteMapping("/event/{eventId}")
     public ResponseEntity<?> deleteEvent(@PathVariable(value = "eventId") int eventId) throws EventNotFoundException {
         Event event = eventRepository.findById(eventId)

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class HomeResource {
-//    @GetMapping("/")
+    //    @GetMapping("/")
 //    public String home(){
 //        return ("<h1>Welcome<h1>");
 //    }
@@ -25,9 +25,9 @@ public class HomeResource {
 //    public String admin(){
 //        return ("<h1>Welcome admin<h1>");
 //    }
-@Autowired
-private
-AuthenticationManager authenticationManager;
+    @Autowired
+    private
+    AuthenticationManager authenticationManager;
 
     @Autowired
     private JwtUtil jwtTokenUtil;
@@ -38,7 +38,7 @@ AuthenticationManager authenticationManager;
     @
 
 
-            RequestMapping({ "/hello" })
+            RequestMapping({"/hello"})
     public String firstPage() {
         return "Hello World";
     }
@@ -50,8 +50,7 @@ AuthenticationManager authenticationManager;
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword())
             );
-        }
-        catch (BadCredentialsException e) {
+        } catch (BadCredentialsException e) {
             throw new Exception("Incorrect username or password", e);
         }
 

@@ -1,12 +1,14 @@
 package com.example.meetingOfficePlanner.meetingOfficePlanner.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.*;
 import java.time.LocalTime;
 
 @Entity
-public class User {
+@Table(name = "User")
+@EntityListeners(AuditingEntityListener.class)
+public class User extends Auditable<String> {
     @Id
     @GeneratedValue
     int userId;
@@ -58,6 +60,7 @@ public class User {
     public void setRoles(String roles) {
         this.roles = roles;
     }
+
     public String getRoles() {
         return roles;
     }
@@ -74,7 +77,7 @@ public class User {
         this.active = active;
     }
 
-    public User(){
+    public User() {
         super();
     }
 
