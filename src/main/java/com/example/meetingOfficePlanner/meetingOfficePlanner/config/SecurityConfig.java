@@ -10,32 +10,14 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-//    @Autowired
-//    MyUserDetailsService myUserDetailsService;
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(myUserDetailsService);
-//    }
-//
-////    @Override
-////    protected void configure(HttpSecurity http) throws Exception {
-////        http.authorizeRequests()
-////                .antMatchers("/admin").hasRole("ADMIN")
-////                .antMatchers("/users").hasAnyRole("ADMIN","USER")
-////                .antMatchers("/").permitAll()
-////        .and().formLogin()
-////        ;
-////    }
-//
-//@Bean
-//    public PasswordEncoder getPasswordEncoder(){return NoOpPasswordEncoder.getInstance();
-//}
+
 @Autowired
 private UserDetailsService myUserDetailsService;
     @Autowired
@@ -43,13 +25,17 @@ private UserDetailsService myUserDetailsService;
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(myUserDetailsService);
+        auth.userDetailsService(myUserDetailsService).passwordEncoder(passwordEncoder());
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
-    }
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return NoOpPasswordEncoder.getInstance();
+//    }
+@Bean
+public PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+}
 
     @Override
     @Bean
@@ -60,11 +46,28 @@ private UserDetailsService myUserDetailsService;
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable()
-                .authorizeRequests().antMatchers("/authenticate").permitAll().
-                anyRequest().authenticated().and().
+                .authorizeRequests()
+                .antMatchers("/api/createuser").hasRole("ADMIN")
+                .antMatchers("/api/createboardmeetings").hasRole("ADMIN")
+                .antMatchers("/api/createevents").hasAnyRole("ADMIN","USER")
+                .antMatchers("/api/deleteanyevent/{eventId}").hasRole("ADMIN")
+                .antMatchers("/api/cancelownevents").hasAnyRole("ADMIN","USER")//todo
+                .antMatchers("/login").permitAll()
+                .anyRequest().authenticated()
+                .and().
+                formLogin().loginPage("/login").usernameParameter("userName")
+                .failureHandler(loginFailureHandler)
+                .successHandler(loginSuccessHandler)
+                .permitAll()
+                .and().logout().permitAll().and().
                 exceptionHandling().and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
     }
+    @Autowired
+    private CustomLoginFailureHandler loginFailureHandler;
+
+    @Autowired
+    private CustomLoginSuccessHandler loginSuccessHandler;
 }

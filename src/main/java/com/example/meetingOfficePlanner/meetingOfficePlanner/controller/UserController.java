@@ -6,7 +6,6 @@ import com.example.meetingOfficePlanner.meetingOfficePlanner.repository.UserRepo
 import com.example.meetingOfficePlanner.meetingOfficePlanner.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,18 +17,12 @@ public class UserController {
     private UserRepository userRepository;
     @Autowired
     private UserService userService;
-    @PostMapping(value="/user")
+    @PostMapping(value="/createuser")
 
     User addNewUser(@RequestBody User user){
         return userService.addUser(user);
     }
 
-
-//
-//    @GetMapping(value = "/user/{userId}") @PostMapping
-////
-////    @DeleteMapping
-////    @PutMapping
 @GetMapping(value = "/user/{userId}")
 public User getSpecificUser(@PathVariable("userId") int userId) throws UserNotFoundException {
     return userService.getUser(userId);
@@ -53,9 +46,6 @@ public User getSpecificUser(@PathVariable("userId") int userId) throws UserNotFo
 
         return ResponseEntity.ok().build();
     }
-//    @DeleteMapping (value = "/users/{id}")
-//    public void  deleteStudent(@PathVariable(value="id") int userId)throws UserNotFoundException{
-//        return UserService.deleteUser(userId);
-//    }
+
 }
 
